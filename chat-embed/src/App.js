@@ -9,28 +9,22 @@ function App() {
     // For now, we'll just log it
   };
 
-  const sampleMessages = [
-    {
-      id: 1,
-      text: "Hello! How can I help you today?",
-      sender: 'bot',
-      timestamp: new Date(Date.now() - 300000) // 5 minutes ago
-    }
-  ];
+  // Backend configuration from environment variables
+  const chatConfig = {
+    baseUrl: process.env.REACT_APP_API_BASE_URL || '',
+    n8nWebhookUrl: process.env.REACT_APP_N8N_WEBHOOK_URL || '',
+    apiKey: process.env.REACT_APP_API_KEY || ''
+  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Chat UI Demo</h1>
-        <div className="chat-demo">
-          <ChatContainer 
-            title="Support Chat"
-            placeholder="Ask me anything..."
-            onSendMessage={handleSendMessage}
-            initialMessages={sampleMessages}
-          />
-        </div>
-      </header>
+      <ChatContainer 
+        title="Support Chat"
+        placeholder="How can we help you?"
+        onSendMessage={handleSendMessage}
+        initialMessages={[]}
+        chatConfig={chatConfig}
+      />
     </div>
   );
 }

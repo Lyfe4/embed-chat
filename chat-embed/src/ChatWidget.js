@@ -15,6 +15,12 @@ class ChatWidget {
       initialMessages: [],
       onSendMessage: this.defaultMessageHandler,
       position: 'inline', // 'inline', 'fixed', 'fullwidth'
+      // Backend configuration
+      chatConfig: {
+        baseUrl: config.baseUrl || '',
+        n8nWebhookUrl: config.n8nWebhookUrl || '',
+        apiKey: config.apiKey || ''
+      },
       ...config
     };
     this.root = null;
@@ -66,6 +72,7 @@ class ChatWidget {
         placeholder={this.config.placeholder}
         onSendMessage={this.config.onSendMessage || this.defaultMessageHandler}
         initialMessages={this.config.initialMessages}
+        chatConfig={this.config.chatConfig}
       />
     );
 
