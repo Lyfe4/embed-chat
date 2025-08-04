@@ -17,12 +17,35 @@
   color: white;
   padding: 16px 20px;
   border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .chat-header h3 {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  line-height: 1;
+}
+
+.close-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.close-button:active {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Responsive design for embedding */
@@ -49,4 +72,21 @@
   width: 100%;
   height: 600px;
   border-radius: 8px;
+}
+
+/* Position-specific styles for chat widget */
+.chat-widget-fullwidth .chat-container {
+  width: 100%;
+  max-width: none;
+  height: 500px;
+}
+
+.chat-widget-inline .chat-container {
+  width: 400px;
+  height: 500px;
+}
+
+.chat-widget-fixed .chat-container {
+  width: 400px;
+  height: 500px;
 }

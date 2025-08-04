@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import Message from './Message';
+import LoadingIndicator from './LoadingIndicator';
 import '../styles/MessageList.css';
 
-const MessageList = ({ messages }) => {
+const MessageList = ({ messages, isLoading }) => {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -27,6 +28,7 @@ const MessageList = ({ messages }) => {
           />
         ))
       )}
+      {isLoading && <LoadingIndicator />}
       <div ref={messagesEndRef} />
     </div>
   );

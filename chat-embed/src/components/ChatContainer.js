@@ -9,7 +9,9 @@ const ChatContainer = ({
   placeholder = "Type your message...",
   onSendMessage,
   initialMessages = [],
-  chatConfig = {}
+  chatConfig = {},
+  position = 'inline',
+  onClose
 }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [isLoading, setIsLoading] = useState(false);
@@ -113,11 +115,17 @@ const ChatContainer = ({
     <div className="chat-container">
       <div className="chat-header">
         <h3>{title}</h3>
+        {position === 'fixed' && onClose && (
+          <button className="close-button" onClick={onClose} title="Close chat">
+            ✕
+          </button>
+        )}
       </div>
-      <MessageList messages={messages} />
+      <MessageList messages={messages} isLoading={isLoading} />
       <MessageInput 
         onSendMessage={handleSendMessage}
         placeholder={placeholder}
+        disabled={isLoading}
       />
     </div>
   );

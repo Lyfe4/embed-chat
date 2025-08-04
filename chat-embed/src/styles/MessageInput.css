@@ -59,3 +59,14 @@
 .send-button:active:not(:disabled) {
   transform: scale(0.95);
 }
+
+.message-textarea.disabled {
+  background-color: #f9fafb;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+.send-button.disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+}

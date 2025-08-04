@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Chat Widget Examples</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .example-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .example-title {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .demo-container {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            min-height: 200px;
+        }
+        .fixed-chat-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 999;
+        }
+        .fixed-chat-trigger:hover {
+            background: #059669;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+        .status.warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fde68a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Working Chat Widget Examples</h1>
+        <p>This page demonstrates the actual working chat widget. Make sure the development server is running!</p>
+
+        <div id="server-status" class="status warning">
+            ⏳ Checking server status...
+        </div>
+
+        <!-- Inline Embedding Example -->
+        <div class="example-section">
+            <h2 class="example-title">1. Inline Chat Widget</h2>
+            <p class="example-description">
+                This is the actual working chat widget embedded inline. Try sending a message!
+            </p>
+            
+            <div class="demo-container">
+                <div id="inline-chat"></div>
+            </div>
+        </div>
+
+        <!-- Full Width Example -->
+        <div class="example-section">
+            <h2 class="example-title">2. Full Width Chat Widget</h2>
+            <p class="example-description">
+                Same widget but taking the full width of its container.
+            </p>
+            
+            <div class="demo-container">
+                <div id="fullwidth-chat"></div>
+            </div>
+        </div>
+
+        <!-- Fixed Position Example -->
+        <div class="example-section">
+            <h2 class="example-title">3. Fixed Position Chat</h2>
+            <p class="example-description">
+                Click the floating button in the bottom-right corner to open a fixed position chat.
+            </p>
+            
+            <button class="fixed-chat-trigger" onclick="toggleFixedChat()" id="chat-trigger">
+                💬 Chat with us
+            </button>
+            <div id="fixed-chat-container"></div>
+        </div>
+
+        <div class="example-section">
+            <h2 class="example-title">Debug Information</h2>
+            <p class="example-description">
+                Open browser console and use these commands to debug:
+            </p>
+            <ul>
+                <li><code>window.chatDebug.getSessionInfo()</code> - Get session information</li>
+                <li><code>window.chatDebug.messages</code> - View current messages</li>
+                <li><code>window.chatDebug.chatService</code> - Access chat service</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Check if development server is running
+        function checkServerStatus() {
+            const statusDiv = document.getElementById('server-status');
+            
+            fetch('http://localhost:3000/static/js/bundle.js')
+                .then(response => {
+                    if (response.ok) {
+                        statusDiv.className = 'status success';
+                        statusDiv.innerHTML = '✅ Development server is running! Chat widgets should work.';
+                        loadChatWidget();
+                    } else {
+                        throw new Error('Server not responding');
+                    }
+                })
+                .catch(error => {
+                    statusDiv.className = 'status error';
+                    statusDiv.innerHTML = '❌ Development server not running. Please run <code>npm start</code> first.';
+                });
+        }
+
+        // Load the actual chat widget from the development server
+        function loadChatWidget() {
+            // Create script element to load the React bundle
+            const script = document.createElement('script');
+            script.src = 'http://localhost:3000/static/js/bundle.js';
+            script.onload = function() {
+                initializeChatWidgets();
+            };
+            script.onerror = function() {
+                console.error('Failed to load chat widget bundle');
+                document.getElementById('server-status').innerHTML = '❌ Failed to load chat widget. Make sure npm start is running.';
+            };
+            document.head.appendChild(script);
+
+            // Also load the CSS
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'http://localhost:3000/static/css/main.css';
+            document.head.appendChild(link);
+        }
+
+        // Initialize chat widgets once the bundle is loaded
+        function initializeChatWidgets() {
+            // Wait a bit for React to be available
+            setTimeout(() => {
+                if (typeof window.createChat === 'function') {
+                    // Initialize inline chat
+                    window.createChat('inline-chat', {
+                        title: 'Customer Support',
+                        placeholder: 'How can we help you today?'
+                    });
+
+                    // Initialize full width chat
+                    window.createChat('fullwidth-chat', {
+                        title: 'AI Assistant',
+                        placeholder: 'Ask me anything...',
+                        position: 'fullwidth'
+                    });
+
+                    console.log('Chat widgets initialized successfully!');
+                } else {
+                    console.error('createChat function not available. Make sure the React app is running.');
+                    document.getElementById('server-status').innerHTML = '⚠️ Chat widget loaded but createChat function not found. Check console for errors.';
+                }
+            }, 1000);
+        }
+
+        // Fixed chat toggle
+        let fixedChatVisible = false;
+        let fixedChatWidget = null;
+        
+        function toggleFixedChat() {
+            const container = document.getElementById('fixed-chat-container');
+            const trigger = document.getElementById('chat-trigger');
+            
+            if (!fixedChatVisible) {
+                if (typeof window.createChat === 'function') {
+                    container.style.display = 'block';
+                    fixedChatWidget = window.createChat('fixed-chat-container', {
+                        title: 'Live Support',
+                        position: 'fixed',
+                        onClose: function() {
+                            // Custom close handler
+                            container.style.display = 'none';
+                            trigger.textContent = '💬 Chat with us';
+                            fixedChatVisible = false;
+                        }
+                    });
+                    trigger.textContent = '✕ Close Chat';
+                    fixedChatVisible = true;
+                } else {
+                    alert('Chat widget not loaded. Please make sure the development server is running.');
+                }
+            } else {
+                container.style.display = 'none';
+                trigger.textContent = '💬 Chat with us';
+                fixedChatVisible = false;
+            }
+        }
+
+        // Check server status when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkServerStatus();
+        });
+    </script>
+</body>
+</html>

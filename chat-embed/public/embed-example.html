@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Widget Embedding Examples</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .example-section {
+            background: white;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .example-title {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .example-description {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .code-block code {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+        }
+        .demo-container {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            min-height: 200px;
+        }
+        .fixed-chat-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 15px 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 999;
+        }
+        .fixed-chat-trigger:hover {
+            background: #059669;
+        }
+        #fixed-chat-container {
+            display: none;
+        }
+        #fixed-chat-container.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chat Widget Embedding Examples</h1>
+        <p>This page demonstrates different ways to embed the chat widget in your website.</p>
+
+        <!-- Inline Embedding Example -->
+        <div class="example-section">
+            <h2 class="example-title">1. Inline Embedding</h2>
+            <p class="example-description">
+                Embed the chat widget directly in your page content. Perfect for support pages or contact forms.
+            </p>
+            
+            <div class="code-block">
+                <code>
+&lt;div id="inline-chat"&gt;&lt;/div&gt;
+&lt;script src="http://localhost:3000/static/js/bundle.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const chat = window.createChat('inline-chat', {
+    title: 'Customer Support',
+    placeholder: 'How can we help you today?',
+    n8nWebhookUrl: 'https://your-n8n-instance.com/webhook/chat'
+  });
+&lt;/script&gt;
+                </code>
+            </div>
+
+            <div class="demo-container">
+                <div id="inline-chat"></div>
+            </div>
+        </div>
+
+        <!-- Fixed Position Example -->
+        <div class="example-section">
+            <h2 class="example-title">2. Fixed Position Chat (Like Intercom)</h2>
+            <p class="example-description">
+                A floating chat button that opens a chat widget. Common pattern for customer support.
+            </p>
+            
+            <div class="code-block">
+                <code>
+&lt;button class="chat-trigger" onclick="toggleChat()"&gt;💬 Chat&lt;/button&gt;
+&lt;div id="fixed-chat" style="display: none;"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  let chatWidget = null;
+  
+  function toggleChat() {
+    const container = document.getElementById('fixed-chat');
+    if (container.style.display === 'none') {
+      container.style.display = 'block';
+      if (!chatWidget) {
+        chatWidget = window.createChat('fixed-chat', {
+          title: 'Live Support',
+          position: 'fixed',
+          n8nWebhookUrl: 'https://your-n8n-instance.com/webhook/chat'
+        });
+      }
+    } else {
+      container.style.display = 'none';
+    }
+  }
+&lt;/script&gt;
+                </code>
+            </div>
+
+            <button class="fixed-chat-trigger" onclick="toggleFixedChat()">💬 Chat with us</button>
+            <div id="fixed-chat-container"></div>
+        </div>
+
+        <!-- Full Width Example -->
+        <div class="example-section">
+            <h2 class="example-title">3. Full Width Embedding</h2>
+            <p class="example-description">
+                Embed the chat widget to take the full width of its container. Great for dedicated chat pages.
+            </p>
+            
+            <div class="code-block">
+                <code>
+&lt;div id="fullwidth-chat"&gt;&lt;/div&gt;
+&lt;script&gt;
+  const chat = window.createChat('fullwidth-chat', {
+    title: 'AI Assistant',
+    placeholder: 'Ask me anything...',
+    position: 'fullwidth',
+    n8nWebhookUrl: 'https://your-n8n-instance.com/webhook/chat'
+  });
+&lt;/script&gt;
+                </code>
+            </div>
+
+            <div class="demo-container">
+                <div id="fullwidth-chat"></div>
+            </div>
+        </div>
+
+        <!-- Configuration Options -->
+        <div class="example-section">
+            <h2 class="example-title">4. Configuration Options</h2>
+            <p class="example-description">
+                Available configuration options for customizing the chat widget.
+            </p>
+            
+            <div class="code-block">
+                <code>
+const chat = window.createChat('chat-container', {
+  // Display options
+  title: 'Custom Chat Title',
+  placeholder: 'Type your message here...',
+  position: 'inline', // 'inline', 'fixed', 'fullwidth'
+  
+  // Backend integration
+  n8nWebhookUrl: 'https://your-n8n-instance.com/webhook/chat',
+  baseUrl: 'https://your-backend-api.com', // Optional: for message persistence
+  apiKey: 'your-api-key-here', // Optional: for authentication
+  
+  // Initial messages (optional)
+  initialMessages: [
+    {
+      id: 1,
+      text: 'Hello! How can I help you today?',
+      sender: 'bot',
+      timestamp: new Date()
+    }
+  ]
+});
+                </code>
+            </div>
+        </div>
+
+        <!-- Environment Variables -->
+        <div class="example-section">
+            <h2 class="example-title">5. Environment Variables</h2>
+            <p class="example-description">
+                You can also configure the widget using environment variables in your .env file.
+            </p>
+            
+            <div class="code-block">
+                <code>
+# .env file
+REACT_APP_N8N_WEBHOOK_URL=https://your-n8n-instance.com/webhook/chat
+REACT_APP_API_BASE_URL=https://your-backend-api.com
+REACT_APP_API_KEY=your-api-key-here
+                </code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the chat widget -->
+    <script>
+        // Simulate loading the widget bundle
+        // In production, you would load from your built bundle
+        
+        // Mock createChat function for demo purposes
+        window.createChat = function(containerId, config = {}) {
+            const container = document.getElementById(containerId);
+            if (!container) {
+                console.error('Container not found:', containerId);
+                return null;
+            }
+            
+            // Create a simple demo chat interface
+            container.innerHTML = `
+                <div style="
+                    border: 1px solid #e0e0e0;
+                    border-radius: 12px;
+                    background: white;
+                    height: ${config.position === 'fullwidth' ? '400px' : '300px'};
+                    width: ${config.position === 'fullwidth' ? '100%' : '350px'};
+                    display: flex;
+                    flex-direction: column;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                    ${config.position === 'fixed' ? 'position: fixed; bottom: 80px; right: 20px; z-index: 1000;' : ''}
+                ">
+                    <div style="
+                        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                        color: white;
+                        padding: 15px;
+                        border-radius: 12px 12px 0 0;
+                        font-weight: 600;
+                    ">
+                        ${config.title || 'Chat'}
+                    </div>
+                    <div style="
+                        flex: 1;
+                        padding: 20px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: #666;
+                        font-style: italic;
+                    ">
+                        This is a demo. In production, this would be your actual chat widget.
+                        <br><br>
+                        n8n Webhook: ${config.n8nWebhookUrl ? '✅ Configured' : '❌ Not configured'}
+                    </div>
+                    <div style="
+                        border-top: 1px solid #e2e8f0;
+                        padding: 15px;
+                        display: flex;
+                        gap: 10px;
+                    ">
+                        <input 
+                            type="text" 
+                            placeholder="${config.placeholder || 'Type a message...'}"
+                            style="
+                                flex: 1;
+                                border: 1px solid #e2e8f0;
+                                border-radius: 20px;
+                                padding: 8px 15px;
+                                outline: none;
+                            "
+                        />
+                        <button style="
+                            background: #10b981;
+                            border: none;
+                            border-radius: 50%;
+                            width: 35px;
+                            height: 35px;
+                            color: white;
+                            cursor: pointer;
+                        ">→</button>
+                    </div>
+                </div>
+            `;
+            
+            return {
+                container: container,
+                config: config
+            };
+        };
+
+        // Initialize demo chats
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inline chat
+            window.createChat('inline-chat', {
+                title: 'Customer Support',
+                placeholder: 'How can we help you today?',
+                n8nWebhookUrl: 'https://your-n8n-instance.com/webhook/chat'
+            });
+
+            // Full width chat
+            window.createChat('fullwidth-chat', {
+                title: 'AI Assistant',
+                placeholder: 'Ask me anything...',
+                position: 'fullwidth',
+                n8nWebhookUrl: 'https://your-n8n-instance.com/webhook/chat'
+            });
+        });
+
+        // Fixed chat toggle
+        let fixedChatVisible = false;
+        function toggleFixedChat() {
+            const container = document.getElementById('fixed-chat-container');
+            if (!fixedChatVisible) {
+                window.createChat('fixed-chat-container', {
+                    title: 'Live Support',
+                    position: 'fixed',
+                    n8nWebhookUrl: 'https://your-n8n-instance.com/webhook/chat'
+                });
+                fixedChatVisible = true;
+            } else {
+                container.innerHTML = '';
+                fixedChatVisible = false;
+            }
+        }
+    </script>
+</body>
+</html>

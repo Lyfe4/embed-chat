@@ -60,9 +60,14 @@ class ChatWidget {
       this.container.style.bottom = '20px';
       this.container.style.right = '20px';
       this.container.style.zIndex = '1000';
+      this.container.style.width = '400px';
     } else if (this.config.position === 'fullwidth') {
       this.container.style.width = '100%';
+      this.container.style.maxWidth = 'none';
     }
+    
+    // Add a class for CSS targeting
+    this.container.classList.add(`chat-widget-${this.config.position}`);
   }
 
   render() {
@@ -73,10 +78,23 @@ class ChatWidget {
         onSendMessage={this.config.onSendMessage || this.defaultMessageHandler}
         initialMessages={this.config.initialMessages}
         chatConfig={this.config.chatConfig}
+        position={this.config.position}
+        onClose={this.config.position === 'fixed' ? this.handleClose : undefined}
       />
     );
 
     this.root.render(<ChatApp />);
+  }
+
+  handleClose = () => {
+    if (this.config.onClose) {
+      this.config.onClose();
+    } else {
+      // Default behavior: hide the container
+      if (this.container) {
+        this.container.style.display = 'none';
+      }
+    }
   }
 
   addMessage(message) {
