@@ -1,3 +1,4 @@
 Embed Chat
-Click into embed-chat for full docs
+Click into chat-embed for full docs
+
 
