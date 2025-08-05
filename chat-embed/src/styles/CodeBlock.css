@@ -1,0 +1,111 @@
+.code-block-container {
+  margin: 8px 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background-color: #f8f9fa;
+}
+
+.code-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #f1f3f4;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 12px;
+}
+
+.code-language {
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.copy-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: #6b7280;
+  font-size: 11px;
+  transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  color: #374151;
+}
+
+.copy-button.copied {
+  background-color: #dcfce7;
+  border-color: #16a34a;
+  color: #16a34a;
+}
+
+.copy-button svg {
+  flex-shrink: 0;
+}
+
+.copy-text {
+  white-space: nowrap;
+}
+
+/* Override some syntax highlighter styles */
+.code-block-container pre {
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+.code-block-container code {
+  background: transparent !important;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace !important;
+}
+
+/* Ensure proper scrolling for long code lines */
+.code-block-container .token-line {
+  white-space: pre;
+}
+
+/* Custom scrollbar for code blocks */
+.code-block-container pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+.code-block-container pre::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.code-block-container pre::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.code-block-container pre::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .copy-text {
+    display: none;
+  }
+  
+  .copy-button {
+    padding: 4px;
+    min-width: 28px;
+    justify-content: center;
+  }
+  
+  .code-block-header {
+    padding: 6px 8px;
+  }
+}

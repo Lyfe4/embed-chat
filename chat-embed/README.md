@@ -15,6 +15,8 @@ A modern, production-ready React chat widget with n8n integration for AI-powered
 - **Message History**: Optional backend integration for message persistence
 
 ### 🎨 User Experience
+- **Markdown Rendering**: Full markdown support for AI responses with syntax highlighting
+- **Code Block Features**: Syntax highlighting and one-click copy buttons for code
 - **Loading Indicators**: Animated typing dots during AI processing
 - **Auto-resize Input**: Text area grows with content
 - **Error Handling**: Graceful error messages with retry functionality
@@ -182,12 +184,15 @@ src/
 │   ├── ChatContainer.js    # Main chat container
 │   ├── MessageList.js      # Message display
 │   ├── MessageInput.js     # Input component
-│   ├── Message.js          # Individual message
+│   ├── Message.js          # Individual message with markdown
+│   ├── CodeBlock.js        # Syntax highlighted code blocks
 │   ├── LoadingIndicator.js # Typing animation
 │   └── ErrorMessage.js     # Error handling
 ├── services/           # Business logic
 │   └── ChatService.js     # API communication
 ├── styles/            # Component styles
+│   ├── CodeBlock.css      # Code block styling
+│   └── ...               # Other component styles
 └── ChatWidget.js      # Widget entry point
 ```
 
@@ -215,15 +220,49 @@ console.log(window.chatDebug.messages);
 console.log(window.chatDebug.chatService);
 ```
 
+## 🎨 Markdown & Code Features
+
+### Rich Text Rendering
+The chat widget now supports full markdown rendering for AI responses, making conversations more engaging and informative:
+
+- **Headers**: H1-H6 with proper hierarchy and styling
+- **Text Formatting**: **Bold**, *italic*, and `inline code`
+- **Lists**: Both bulleted and numbered lists
+- **Links**: Clickable links that open in new tabs
+- **Blockquotes**: Styled quote blocks for emphasis
+
+### Advanced Code Support
+Perfect for technical support, programming assistance, or documentation:
+
+```javascript
+// Code blocks with syntax highlighting
+function greetUser(name) {
+  return `Hello, ${name}! Welcome to our chat.`;
+}
+```
+
+**Features:**
+- **Syntax Highlighting**: Support for 100+ programming languages
+- **Copy Button**: One-click copying of code blocks
+- **Language Detection**: Automatic language identification
+- **Responsive Design**: Mobile-friendly code display
+
+### Supported Languages
+JavaScript, Python, HTML, CSS, JSON, SQL, Bash, and many more...
+
 ## 📊 Recent Improvements
 
 ### ✅ Enhanced UX
+- **NEW**: Full markdown rendering with syntax highlighting
+- **NEW**: Copy code buttons for easy code sharing
 - Added animated loading indicators
 - Improved input validation and auto-resize
 - Better error handling with retry functionality
 - Enhanced mobile responsiveness
 
 ### ✅ Technical Enhancements
+- **NEW**: React-markdown integration with custom components
+- **NEW**: React-syntax-highlighter for code blocks
 - Fixed manifest.json for PWA compliance
 - Improved component architecture
 - Better session management
@@ -234,8 +273,6 @@ console.log(window.chatDebug.chatService);
 - Security best practices
 - Performance optimizations
 - Complete documentation
-
-> 📋 **Full Improvement List**: See [IMPROVEMENTS.md](./IMPROVEMENTS.md) for detailed changes and recommendations.
 
 ## 🔒 Security & Best Practices
 
@@ -255,7 +292,6 @@ console.log(window.chatDebug.chatService);
 ## 📚 Documentation
 
 - **[Backend Integration Guide](./BACKEND_INTEGRATION.md)** - Complete n8n setup
-- **[Improvements & Recommendations](./IMPROVEMENTS.md)** - Enhancement details
 - **[Embedding Examples](./public/embed-example.html)** - Live demos
 
 ## 🤝 Contributing
@@ -265,16 +301,6 @@ console.log(window.chatDebug.chatService);
 3. Commit changes: `git commit -m 'Add amazing feature'`
 4. Push to branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🆘 Support
-
-- **Issues**: [GitHub Issues](https://github.com/your-username/chat-embed/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/your-username/chat-embed/discussions)
-- **Documentation**: Check the docs folder for detailed guides
 
 ---
 

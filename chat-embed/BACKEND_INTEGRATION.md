@@ -30,7 +30,7 @@ const chat = window.createChat('chat-container', {
 ### 2. Test Your Integration
 
 1. Start your React app: `npm start`
-2. Open `embed-with-backend.html` in your browser
+2. Open `public/working-example.html` in your browser
 3. Replace the placeholder URLs with your actual endpoints
 4. Send a test message
 
@@ -309,5 +309,6 @@ If you encounter issues:
 4. Use the debug tools provided in the widget
 
 For more help, check the example files:
-- `embed-with-backend.html` - Complete working example
+- `public/working-example.html` - Complete working example
+- `public/embed-example.html` - Additional embedding examples
 - `.env.example` - Environment configuration template
